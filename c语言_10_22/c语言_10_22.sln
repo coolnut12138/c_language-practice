@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c语言_10_22", "c语言_10_22\c语言_10_22.vcproj", "{275445E2-D87A-46A8-98C2-99C6D5CEBB70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{275445E2-D87A-46A8-98C2-99C6D5CEBB70}.Debug|Win32.ActiveCfg = Debug|Win32
+		{275445E2-D87A-46A8-98C2-99C6D5CEBB70}.Debug|Win32.Build.0 = Debug|Win32
+		{275445E2-D87A-46A8-98C2-99C6D5CEBB70}.Release|Win32.ActiveCfg = Release|Win32
+		{275445E2-D87A-46A8-98C2-99C6D5CEBB70}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
