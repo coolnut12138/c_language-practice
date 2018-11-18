@@ -6,7 +6,10 @@
 typedef struct PersonInfo //创建个人信息结构体
 {
 	char name[1024];
+	char sex[1024];
+	char age[1024];
 	char phone[1024];
+	char address[1024];
 }PersonInfo;
 
 //#define SIZE 1000  //最大联系人数量
@@ -52,10 +55,16 @@ void AddPersonInfo()
 	//判断是否扩容
 	CheckRealloc();
 	printf("请输入联系人信息\n");
-	printf("请输入用户名:\n");
+	printf("请输入联系人名:\n");
 	scanf("%s", g_addr_book.person_info[g_addr_book.size].name);
-	printf("请输入用户电话号码:\n");
+	printf("请输入联系人性别:\n");
+	scanf("%s", g_addr_book.person_info[g_addr_book.size].sex);
+	printf("请输入联系人年龄:\n");
+	scanf("%s", g_addr_book.person_info[g_addr_book.size].age);
+	printf("请输入联系人电话号码:\n");
 	scanf("%s", g_addr_book.person_info[g_addr_book.size].phone);
+	printf("请输入联系人地址:\n");
+	scanf("%s", g_addr_book.person_info[g_addr_book.size].address);
 	g_addr_book.size++;
 	printf("添加成功\n");
 	return;
@@ -77,7 +86,13 @@ void DelPersonInfo()
 		strcpy(g_addr_book.person_info[num].name,
 			g_addr_book.person_info[g_addr_book.size - 1].name);
 		strcpy(g_addr_book.person_info[num].phone,
+			g_addr_book.person_info[g_addr_book.size - 1].sex);
+		strcpy(g_addr_book.person_info[num].sex,
+			g_addr_book.person_info[g_addr_book.size - 1].age);
+		strcpy(g_addr_book.person_info[num].age,
 			g_addr_book.person_info[g_addr_book.size - 1].phone);
+		strcpy(g_addr_book.person_info[num].address,
+			g_addr_book.person_info[g_addr_book.size - 1].address);
 	}
 	g_addr_book.size--;
 	count++;
@@ -87,7 +102,7 @@ void DelPersonInfo()
 void FindPersonInfo()
 {
 	printf("查找联系人:\n");
-	printf("请输入用户名:\n");
+	printf("请输入联系人姓名:\n");
 	char name[1024] = {0};
 	int count = 0;
 	scanf("%s",name);
@@ -95,8 +110,9 @@ void FindPersonInfo()
 	{
 		if (0 == strcmp(name, g_addr_book.person_info[i].name))
 		{
-			printf("找到一条记录，电话号码为：%s\n",
-				g_addr_book.person_info[i].phone);
+			printf("找到一条记录，性别为：%s,年龄为：%s,电话号码为：%s,家庭住址为：%s\n",
+				g_addr_book.person_info[i].sex,g_addr_book.person_info[i].age,
+				g_addr_book.person_info[i].phone,g_addr_book.person_info[i].address);
 			count++;
 		}
 	}
@@ -120,10 +136,16 @@ void ModifyPersonInfo()
 		printf("输入编号超出范围，请重新输入:\n");
 		scanf("%d",&num);
 	}
-	printf("请输入新的用户名:\n");
+	printf("请输入新的联系人姓名:\n");
 	scanf("%s",g_addr_book.person_info[num].name);
-	printf("请输入新用户的电话号码:\n");
+	printf("请输入新的联系人性别:\n");
+	scanf("%s", g_addr_book.person_info[num].sex);
+	printf("请输入新的联系人年龄:\n");
+	scanf("%s", g_addr_book.person_info[num].age);
+	printf("请输入新联系人的电话号码:\n");
 	scanf("%s",g_addr_book.person_info[num].phone);
+	printf("请输入新的联系人家庭住址:\n");
+	scanf("%s", g_addr_book.person_info[num].address);
 	printf("修改成功\n");
 }
 void DisplayPersonInfo()
@@ -131,18 +153,20 @@ void DisplayPersonInfo()
 	printf("打印所有联系人信息\n");
 	for (int i = 0; i < g_addr_book.size; i++)
 	{
-		printf("[%d][%s] %s\n",i,g_addr_book.person_info[i].name,
-			g_addr_book.person_info[i].phone);
+		printf("编号：[%d] 姓名：[%s] 性别：%s 年龄：%s  电话号码：%s 家庭住址：%s\n",
+			i,g_addr_book.person_info[i].name,
+			g_addr_book.person_info[i].sex, g_addr_book.person_info[i].age,
+			g_addr_book.person_info[i].phone,g_addr_book.person_info[i].address);
 	}
 	printf("打印完成,共打印了%d条信息\n",g_addr_book.size);
 }
 void ClearPersonInfo()
 {
 	printf("清除所有用户信息！\n");
-	printf("你是否确定要删除所有信息？ y/n\n");
+	printf("你是否确定要删除所有信息？ y：确认删除，按其他键取消删除\n");
 	char input[1024] = { 0 };
 	scanf("%s",input);
-	if (0 != strcmp(input, "y")) //注意当输入不是y或者n时的情况
+	if (0 != strcmp(input, "y")) 
 	{
 		printf("已取消删除操作！\n");
 		return;
