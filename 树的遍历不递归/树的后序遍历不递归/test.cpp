@@ -117,30 +117,60 @@ void InorderTraversalNoR(Node *root){
 }
 
 // 后序遍历非递归
+//void PostorderTraversalNoR(Node *root) {
+//	std::stack<Node *>	s;	// 栈
+//	std::stack<Node *>	b;
+//	Node *cur = root;
+//	Node *top = NULL;
+//	Node *top2 = NULL;
+//	char arr[1024];
+//	int i = 0;
+//
+//	while (cur != NULL || !s.empty()) {
+//		while (cur != NULL) {
+//			s.push(cur);
+//			b.push(cur);
+//			top2 = b.top(); b.pop();
+//			arr[i] = top2->val;
+//			cur = cur->right;
+//			i++;
+//			arr[i] = '\0';
+//		}
+//		top = s.top();	s.pop();
+//		cur = top->left;	
+//	}
+//	for (int j = strlen(arr) - 1; j >= 0; j--){
+//		printf("%c ", arr[j]);
+//	}
+//}
+
+// 后序遍历非递归
 void PostorderTraversalNoR(Node *root) {
-	std::stack<Node *>	s;	// 栈
-	std::stack<Node *>	b;
+	std::stack<Node *>	s;
 	Node *cur = root;
 	Node *top = NULL;
-	Node *top2 = NULL;
-	char arr[1024];
-	int i = 0;
+	Node *last = NULL;
 
 	while (cur != NULL || !s.empty()) {
 		while (cur != NULL) {
 			s.push(cur);
-			b.push(cur);
-			top2 = b.top(); b.pop();
-			arr[i] = top2->val;
-			cur = cur->right;
-			i++;
-			arr[i] = '\0';
+			cur = cur->left;
 		}
-		top = s.top();	s.pop();
-		cur = top->left;	
-	}
-	for (int j = strlen(arr) - 1; j >= 0; j--){
-		printf("%c ", arr[j]);
+
+		top = s.top();
+		if (top->right == NULL){
+			printf("%c ", top->val);
+			s.pop();
+			last = top;
+		}
+		else if (top->right == last){
+			printf("%c ", top->val);
+			s.pop();
+			last = top;
+		}
+		else{
+			cur = top->right;
+		}
 	}
 }
 
