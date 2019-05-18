@@ -4,7 +4,7 @@
 #include<assert.h>
 #include<stdio.h>
 
-
+#if 0
 //内部结点
 //创建新结点空间
 DListNode *BuyNode(DLDataType val)
@@ -146,3 +146,134 @@ void DListPrint(DListNode *head)
 	}
 	printf("\n");
 }
+#endif
+
+#if 1
+DListNode* BuyNode(DLDataType val)
+{
+	DListNode *node = (DListNode*)malloc(sizeof(DListNode));	//申请的字节数如果不对会导致free崩溃
+	assert(node != NULL);
+	node->val = val;
+	node->next = NULL;
+	node->prev = NULL;
+	return node;
+}
+void DListInit(DList *dlist)
+{
+	//创建头结点
+	DListNode *head = BuyNode(0);
+	head->next = head;
+	head->prev = head;
+	dlist->head = head;
+}
+
+void DListClear(DList *dlist)
+{
+	//只留头结点
+	DListNode *cur, *next;
+	cur = dlist->head->next;
+	while (cur != dlist->head){
+		next = cur->next;
+		//free(cur);
+		cur = next;
+	}
+	dlist->head->next = dlist->head;
+	dlist->head->prev = dlist->head;
+}
+
+void DListDestroy(DList *dlist)
+{
+	//头结点也删除
+	DListClear(dlist);
+	free(dlist->head);
+	dlist->head = NULL;
+}
+
+void DListPushFront(DList *dlist, DLDataType val)
+{
+	DListNode *node = BuyNode(val);
+	dlist->head->next->prev = node;
+	node->next = dlist->head->next;
+	node->prev = dlist->head;
+	dlist->head->next = node;
+}
+
+void DListPushBack(DList *dlist, DLDataType val)
+{
+	DListNode *node = BuyNode(val);
+	dlist->head->prev->next = node;
+	node->prev = dlist->head->prev;
+	node->next = dlist->head;
+	dlist->head->prev = node;
+}
+
+DListNode *DListFind(DList *dlist, DLDataType val)
+{
+	DListNode *cur = dlist->head->next, *next;
+	while (cur != dlist->head){
+		if (cur->val == val){
+			return cur;
+		}
+		next = cur->next;
+		cur = next;
+	}
+	return NULL;
+}
+
+//在pos前面插入
+void DListInsert(DListNode *pos, DLDataType val)
+{
+	DListNode *node = BuyNode(val);
+	pos->prev->next = node;
+	node->next = pos;
+	node->prev = pos->prev;
+	pos->prev = node;
+}
+
+//删除pos结点。不是头结点
+void DListErase(DListNode *pos)
+{
+	pos->prev->next = pos->next;
+	pos->next->prev = pos->prev;
+	free(pos);
+}
+
+void DListPopFront(DList *dlist)
+{
+	assert(dlist->head->next != dlist->head);
+	DListNode *node = dlist->head->next;
+	dlist->head->next = dlist->head->next->next;
+	dlist->head->next->prev = dlist->head;
+	free(node);
+}
+
+void DListPopBack(DList *dlist)
+{
+	assert(dlist->head->prev != dlist->head);
+	DListNode *node = dlist->head->prev;
+	dlist->head->prev->prev->next = dlist->head;
+	dlist->head->prev = dlist->head->prev->prev;
+	free(node);
+}
+
+void DListPrint(DListNode *head)
+{
+	DListNode *cur = head->next, *next;
+	while (cur != head)
+	{
+		printf("%d->",cur->val);
+		next = cur->next;
+		cur = next;
+	}
+	printf("\n");
+}
+#endif
+
+
+
+
+
+
+
+
+

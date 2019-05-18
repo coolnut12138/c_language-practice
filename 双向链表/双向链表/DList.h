@@ -8,7 +8,7 @@ typedef struct DListNode{
 	DLDataType val;
 	struct DListNode *next;
 	struct DListNode *prev;
-}	DListNode;
+}DListNode;
 
 //双向链表类型
 typedef struct {
